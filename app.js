@@ -8,7 +8,8 @@ var app = new Vue ({
 
         newEmailInput: '',
         newPasswordInput: '',
-        newFullnameInput: ''
+        newFullnameInput: '',
+        page: 'start'
 
     },
 
@@ -120,7 +121,46 @@ var app = new Vue ({
 
 
 
-        }   
+        },
+        
+        setupPage: function (page) {
+            this.page = page;
+        },
+
+        loadThreadPage: async function () {
+            this.setupPage(thread_page)
+        },
+
+        getThread: async function () {
+            let response = await fetch(URL + "/thread", {
+                credentials: 'include'
+            });
+
+            if (response.status == 200) {
+                //successfully acquired the data
+                let body = await response.json();
+                this.threads = body;
+            } else {
+                console.error("Error fetching threads:", response.status);
+            }
+
+        },
+
+        getThread: async function () {
+            let response = await fetch (URL + "/thread" + id, {
+                credentials: 'include'
+            });
+
+            //check response status
+            if (respose.status == 200) {
+                this.currentThread = await response.json();
+                this.loadThreadPage();
+            } else {
+                console.log("Error fetching individual request with id", id, "- status:", response.status);
+            }
+        }
+
+
 
     },
 

@@ -9,27 +9,41 @@
   </head>
   <body>
     <div id="app">
-      <!-- Login with existing account -->
       <h1>Login Form</h1>
-      <input placeholder="Email" v-model="loginEmailInput" />
-      <input
-        type="password"
-        placeholder="Password"
-        v-model="loginPasswordInput"
-      />
 
-      <button @click="postSession()">Login</button>
+      <!-- Login with existing account -->
+      <button @click="setupPage('login')">Login</button>
+      <div v-else-if="page == 'login'">
+        <h1>Sign In</h1>
+        <input placeholder="Email" v-model="loginEmailInput" />
+        <input
+          type="password"
+          placeholder="Password"
+          v-model="loginPasswordInput"
+        />
+
+        <button @click="postSession()">Sign in</button>
+      </div>
 
       <!-- Creating a new account -->
-      <h1>Registration Form</h1>
-      <input placeholder="New Email..." v-model="newEmailInput" />
-      <input
-        type="password"
-        placeholder="New Password..."
-        v-model="newPasswordInput"
-      />
-      <input placeholder="Full Name" v-model="newFullnameInput" />
-      <button @click="postUser()">Create New User</button>
+      <button @click="setupPage('register')">Create New Account</button>
+      <div v-else-if="page == 'register'">
+        <h1>Register An Account</h1>
+        <input placeholder="New Email..." v-model="newEmailInput" />
+        <input
+          type="password"
+          placeholder="New Password..."
+          v-model="newPasswordInput"
+        />
+        <input placeholder="Full Name" v-model="newFullnameInput" />
+        <button @click="postUser()">Register</button>
+      </div>
+
+      <!-- Thread page - displays a single thread, along with comments -->
+      <div v-else-if="page == 'thread'">
+        <h1>{{ currentThread.name }}</h1>
+        <div v-for="post in currentThread.post"
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="app.js"></script>
